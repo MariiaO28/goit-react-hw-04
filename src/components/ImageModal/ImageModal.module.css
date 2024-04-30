@@ -1,0 +1,16 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  outline: none;
+  z-index: 99999;
+}
+
+.image {
+  display: block;
+  width: 1000px;
+  height: 600px;
+  object-fit: cover;
+}
