@@ -17,11 +17,13 @@ export default function App() {
   const [query, setQuery] = useState("")
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
  
 async function handleSearch(newQuery) {
     setQuery(newQuery);
     setPage(1);
     setPhotos([]);
+    setTotalPages(0);
   }
 
   function handleLoadMore() {
@@ -39,10 +41,11 @@ async function handleSearch(newQuery) {
        setPhotos(prevPhotos => {
          return [...prevPhotos, ...data.results];
        })
+        setTotalPages(data.total_pages)
     } catch (error) {
-      setError (true)
+        setError(true)
     } finally {
-      setIsLoading (false)
+        setIsLoading(false)
      }
     }
     getPhotos()
@@ -65,8 +68,7 @@ async function handleSearch(newQuery) {
       <ImageModal onClose={closeModal} onOpen={modalIsOpen}
       photo={selectedPhoto} />
       {isLoading && <Loader />}
-      {photos.length < 12 || photos.length > 0 && !isLoading && <LoadMoreBtn className={css.button} onLoadMore={handleLoadMore} />}
+      {page < totalPages && !isLoading && <LoadMoreBtn className={css.button} onLoadMore={handleLoadMore} />}
     </div>
   )
-  
 }
